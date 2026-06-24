@@ -1,0 +1,118 @@
+@import "tailwindcss";
+
+:root {
+  /* HITHAM admin design tokens — moss & ivory, herbalist's ledger */
+  --hi-ivory: #faf8f3;
+  --hi-ivory-dim: #f1eee4;
+  --hi-ink: #16201a;
+  --hi-ink-soft: #3c463e;
+  --hi-moss: #1f2b22;
+  --hi-moss-light: #2b3a2f;
+  --hi-sage: #7a8c76;
+  --hi-sage-light: #b9c4b3;
+  --hi-sage-dim: #e6e9e2;
+  --hi-clay: #a33b2e;
+  --hi-clay-dim: #f3e2de;
+  --hi-gold: #b8923f;
+  --hi-success: #4c6b4f;
+  --hi-success-dim: #e3eadf;
+  --hi-border: #e3ddcf;
+  --hi-border-dark: #344034;
+  --hi-forest: #0f1a12;
+
+  --background: var(--hi-ivory);
+  --foreground: var(--hi-ink);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  --color-ivory: var(--hi-ivory);
+  --color-ivory-dim: var(--hi-ivory-dim);
+  --color-ink: var(--hi-ink);
+  --color-ink-soft: var(--hi-ink-soft);
+  --color-moss: var(--hi-moss);
+  --color-moss-light: var(--hi-moss-light);
+  --color-sage: var(--hi-sage);
+  --color-sage-light: var(--hi-sage-light);
+  --color-sage-dim: var(--hi-sage-dim);
+  --color-clay: var(--hi-clay);
+  --color-clay-dim: var(--hi-clay-dim);
+  --color-gold: var(--hi-gold);
+  --color-success: var(--hi-success);
+  --color-success-dim: var(--hi-success-dim);
+  --color-border-soft: var(--hi-border);
+  --color-border-dark: var(--hi-border-dark);
+  --color-forest: var(--hi-forest);
+
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-fraunces);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* signature growth-line accent: a thin sage underline that grows in */
+@keyframes growth-line {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+.growth-line {
+  position: relative;
+}
+.growth-line::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  height: 2px;
+  width: 100%;
+  background: var(--hi-sage);
+  transform-origin: left;
+  animation: growth-line 0.5s ease-out;
+}
+
+::selection {
+  background: var(--hi-sage-light);
+}
+
+/* thin scrollbars to match the calm, deliberate feel */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--hi-sage-light) transparent;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* storefront signature: a sprouting line that grows and branches on load,
+   echoing the admin growth-line but as the brand's actual hero moment */
+@keyframes sprout-grow {
+  from { stroke-dashoffset: 1; }
+  to { stroke-dashoffset: 0; }
+}
+.sprout-path {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  pathLength: 1;
+  animation: sprout-grow 1.6s ease-out forwards;
+  animation-delay: var(--sprout-delay, 0s);
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.fade-up {
+  animation: fade-up 0.6s ease-out both;
+}

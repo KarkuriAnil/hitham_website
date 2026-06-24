@@ -1,0 +1,43 @@
+rules_version = '2';
+
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    // Public-facing assets: anyone can view (needed for the storefront),
+    // writes are locked down for the same reason described in
+    // firestore.rules — the admin password gate lives in the Next.js app,
+    // not in Firebase, so Storage needs its own real boundary.
+    // See README.md → "Read this before deploying" for how to close this.
+
+    match /products/{allPaths=**} {
+      allow read: if true;
+      allow write: if false; // TODO: restrict to admin custom claim
+    }
+
+    match /blogs/{allPaths=**} {
+      allow read: if true;
+      allow write: if false; // TODO: restrict to admin custom claim
+    }
+
+    match /testimonials/{allPaths=**} {
+      allow read: if true;
+      allow write: if false; // TODO: restrict to admin custom claim
+    }
+
+    match /banners/{allPaths=**} {
+      allow read: if true;
+      allow write: if false; // TODO: restrict to admin custom claim
+    }
+
+    match /subscriptions/{allPaths=**} {
+      allow read: if true;
+      allow write: if false; // TODO: restrict to admin custom claim
+    }
+
+    // User profile photos: each signed-in user manages only their own folder.
+    match /users/{userId}/{allPaths=**} {
+      allow read: if true;
+      allow write: if request.auth != null && request.auth.uid == userId;
+    }
+  }
+}

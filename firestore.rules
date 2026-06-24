@@ -1,0 +1,86 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // --- Helpers -------------------------------------------------------
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    // Admin-side writes go through the Next.js admin app, which is gated
+    // by ADMIN_PASSWORD + an httpOnly cookie checked in proxy.ts — that
+    // gate happens at the Next.js layer, not here. These rules describe
+    // what the *public* storefront (signed-in customers) may do directly
+    // against Firestore. If you later add Firebase Auth custom claims for
+    // admins, swap the TODOs below for `request.auth.token.admin == true`.
+
+    // --- Products: public read, no public write -------------------------
+    match /products/{productId} {
+      allow read: if true;
+      allow write: if false; // TODO: restrict to admin custom claim
+    }
+
+    // --- Subscription plans: public read, no public write ---------------
+    match /subscriptionPlans/{planId} {
+      allow read: if true;
+      allow write: if false; // TODO: restrict to admin custom claim
+    }
+
+    // --- Blogs & testimonials: public read, no public write --------------
+    match /blogs/{blogId} {
+      allow read: if true;
+      allow write: if false; // TODO: restrict to admin custom claim
+    }
+
+    match /testimonials/{testimonialId} {
+      allow read: if true;
+      allow write: if false; // TODO: restrict to admin custom claim
+    }
+
+    // --- Recommendations: public read (used by the AI engine) -----------
+    match /recommendations/{recommendationId} {
+      allow read: if true;
+      allow write: if false; // TODO: restrict to admin custom claim
+    }
+
+    // --- Users: a user can read/update only their own profile -----------
+    match /users/{userId} {
+      allow read: if isOwner(userId);
+      allow create: if isOwner(userId);
+      allow update: if isOwner(userId)
+                    && !("role" in request.resource.data.diff(resource.data).affectedKeys());
+      allow delete: if false;
+    }
+
+    // --- Orders: a user can read/create their own orders ----------------
+    match /orders/{orderId} {
+      allow read: if isSignedIn() && resource.data.userId == request.auth.uid;
+      allow create: if isSignedIn() && request.resource.data.userId == request.auth.uid;
+      // Status transitions (orderStatus, paymentStatus) are admin-only in
+      // practice — performed via the admin app. Customers cannot update.
+      allow update: if false;
+      allow delete: if false;
+    }
+
+    // --- User subscriptions: scoped to the owning user -------------------
+    match /userSubscriptions/{subscriptionId} {
+      allow read: if isSignedIn() && resource.data.userId == request.auth.uid;
+      allow create: if isSignedIn() && request.resource.data.userId == request.auth.uid;
+      allow update: if isSignedIn() && resource.data.userId == request.auth.uid;
+      allow delete: if false;
+    }
+
+    // --- Payments: scoped to the owning user, write via app only --------
+    match /payments/{paymentId} {
+      allow read: if isSignedIn() && resource.data.userId == request.auth.uid;
+      allow create: if isSignedIn() && request.resource.data.userId == request.auth.uid;
+      allow update: if false;
+      allow delete: if false;
+    }
+  }
+}
