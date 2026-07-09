@@ -1,27 +1,40 @@
 @import "tailwindcss";
 
 :root {
-  /* HITHAM admin design tokens — moss & ivory, herbalist's ledger */
-  --hi-ivory: #faf8f3;
-  --hi-ivory-dim: #f1eee4;
-  --hi-ink: #16201a;
-  --hi-ink-soft: #3c463e;
-  --hi-moss: #1f2b22;
-  --hi-moss-light: #2b3a2f;
-  --hi-sage: #7a8c76;
-  --hi-sage-light: #b9c4b3;
-  --hi-sage-dim: #e6e9e2;
+  /* VEDAHITHAM brand tokens — from official brand guideline */
+  --veda-green: #505422;
+  --veda-green-light: #6b7230;
+  --veda-green-dark: #3a3d18;
+  --hitham-gold: #c59c44;
+  --hitham-gold-light: #d4b46a;
+  --hitham-gold-dim: #f5edd8;
+  --parchment: #faf7f0;
+  --parchment-dim: #f0ead8;
+  --night-earth: #2a2a1e;
+  --night-earth-soft: #4a4a36;
+  --cream-border: #e8dfc8;
+
+  /* Map to existing token names so existing code keeps working */
+  --hi-ivory: var(--parchment);
+  --hi-ivory-dim: var(--parchment-dim);
+  --hi-ink: var(--night-earth);
+  --hi-ink-soft: var(--night-earth-soft);
+  --hi-moss: var(--veda-green);
+  --hi-moss-light: var(--veda-green-light);
+  --hi-sage: #7a8c4a;
+  --hi-sage-light: #a8b870;
+  --hi-sage-dim: #eaedd8;
   --hi-clay: #a33b2e;
   --hi-clay-dim: #f3e2de;
-  --hi-gold: #b8923f;
-  --hi-success: #4c6b4f;
-  --hi-success-dim: #e3eadf;
-  --hi-border: #e3ddcf;
-  --hi-border-dark: #344034;
-  --hi-forest: #0f1a12;
+  --hi-gold: var(--hitham-gold);
+  --hi-success: var(--veda-green);
+  --hi-success-dim: #e8edd8;
+  --hi-border: var(--cream-border);
+  --hi-border-dark: #505422;
+  --hi-forest: var(--veda-green-dark);
 
-  --background: var(--hi-ivory);
-  --foreground: var(--hi-ink);
+  --background: var(--parchment);
+  --foreground: var(--night-earth);
 }
 
 @theme inline {
@@ -45,10 +58,16 @@
   --color-border-soft: var(--hi-border);
   --color-border-dark: var(--hi-border-dark);
   --color-forest: var(--hi-forest);
+  --color-parchment: var(--parchment);
+  --color-parchment-dim: var(--parchment-dim);
+  --color-veda-green: var(--veda-green);
+  --color-hitham-gold: var(--hitham-gold);
+  --color-hitham-gold-dim: var(--hitham-gold-dim);
+  --color-night-earth: var(--night-earth);
 
   --font-sans: var(--font-inter);
-  --font-display: var(--font-fraunces);
-  --font-mono: var(--font-geist-mono);
+  --font-display: var(--font-cormorant);
+  --font-mono: ui-monospace, monospace;
 }
 
 body {
@@ -58,7 +77,21 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* signature growth-line accent: a thin sage underline that grows in */
+/* Vedahitham signature — gold rule lines flanking text, echoing the
+   "GOOD FOOD FOR LIFE" lockup from the brand guide */
+.brand-rule {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.brand-rule::before,
+.brand-rule::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--hitham-gold);
+}
+
 @keyframes growth-line {
   from { transform: scaleX(0); }
   to { transform: scaleX(1); }
@@ -73,30 +106,11 @@ body {
   bottom: -1px;
   height: 2px;
   width: 100%;
-  background: var(--hi-sage);
+  background: var(--hitham-gold);
   transform-origin: left;
   animation: growth-line 0.5s ease-out;
 }
 
-::selection {
-  background: var(--hi-sage-light);
-}
-
-/* thin scrollbars to match the calm, deliberate feel */
-* {
-  scrollbar-width: thin;
-  scrollbar-color: var(--hi-sage-light) transparent;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    transition-duration: 0.01ms !important;
-  }
-}
-
-/* storefront signature: a sprouting line that grows and branches on load,
-   echoing the admin growth-line but as the brand's actual hero moment */
 @keyframes sprout-grow {
   from { stroke-dashoffset: 1; }
   to { stroke-dashoffset: 0; }
@@ -104,7 +118,6 @@ body {
 .sprout-path {
   stroke-dasharray: 1;
   stroke-dashoffset: 1;
-  pathLength: 1;
   animation: sprout-grow 1.6s ease-out forwards;
   animation-delay: var(--sprout-delay, 0s);
 }
@@ -115,4 +128,20 @@ body {
 }
 .fade-up {
   animation: fade-up 0.6s ease-out both;
+}
+
+::selection {
+  background: var(--hitham-gold-dim);
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--hitham-gold-light) transparent;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
 }
