@@ -92,7 +92,7 @@ export default function AboutPage() {
             Every great journey begins with a return to what truly matters. The
             name <strong className="text-parchment">VEDAHITHAM</strong> comes
             from two powerful ideas:{" "}
-            <em className="text-hitham-gold">Veda</em> (ancient wisdom) &{" "}
+            <em className="text-hitham-gold">Veda</em> (ancient wisdom) &amp;{" "}
             <em className="text-hitham-gold">Hitham</em> (beneficial, good).
             Together they form our core mission: bringing the timeless benefits
             of ancient Ayurvedic wisdom into modern daily life.
@@ -106,7 +106,7 @@ export default function AboutPage() {
             </Link>
             
               href="/brand-guide.pdf"
-              download={true}
+              download="brand-guide.pdf"
               className="flex items-center gap-2 rounded-full border border-parchment/30 px-6 py-3 text-sm text-parchment transition-colors hover:bg-parchment/10"
             >
               <Download className="h-4 w-4" />
@@ -144,7 +144,6 @@ export default function AboutPage() {
               <p>Every recipe and every product carries her promise:</p>
             </div>
 
-            {/* Promise tags */}
             <div className="mt-4 flex flex-wrap gap-2">
               {PROMISES.map((p) => (
                 <span
@@ -296,7 +295,7 @@ export default function AboutPage() {
         </p>
         
           href="/brand-guide.pdf"
-          download={true}
+          download="brand-guide.pdf"
           className="mt-6 inline-flex items-center gap-2 rounded-full bg-hitham-gold px-8 py-3 text-sm font-semibold text-veda-green-dark transition-colors hover:bg-hitham-gold-light"
         >
           <Download className="h-4 w-4" />
