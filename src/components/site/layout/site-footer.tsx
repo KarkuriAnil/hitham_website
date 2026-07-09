@@ -16,7 +16,7 @@ export function SiteFooter() {
           </p>
           
             href="/brand-guide.pdf"
-            download={true}
+            download="brand-guide.pdf"
             className="mt-5 inline-flex items-center gap-2 rounded-full border border-hitham-gold px-4 py-2 text-xs text-hitham-gold transition-colors hover:bg-hitham-gold hover:text-veda-green-dark"
           >
             <Download className="h-3.5 w-3.5" />
