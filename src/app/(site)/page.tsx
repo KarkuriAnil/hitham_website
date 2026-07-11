@@ -3,10 +3,11 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { ShoppingBag, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { ProductCard } from "@/components/site/products/product-card";
 import { WhyUsScroll } from "@/components/site/home/why-us-scroll";
 import { IngredientsMatter } from "@/components/site/home/ingredients-matter";
+import { HeroSlider } from "@/components/site/home/hero-slider";
 import { getStorefrontProducts } from "@/lib/site/products";
 import type { Product } from "@/types";
 
@@ -69,101 +70,8 @@ export default function HomePage() {
         chemicals. No compromises.
       </div>
 
-      {/* ============ HERO ============ */}
-      <section className="relative w-full overflow-hidden bg-veda-green">
-
-        {/* MOBILE — clean green, no image text bleeding through */}
-        <div className="flex flex-col items-center px-6 py-14 text-center lg:hidden">
-          <p className="font-display text-sm font-medium italic text-parchment/70">
-            Changing The Way India Eats
-          </p>
-          <div className="mt-2 h-px w-36 bg-parchment/30" />
-          <h1 className="mt-3 font-display text-4xl font-black uppercase leading-tight text-hitham-gold">
-            VEDAHITHAM
-          </h1>
-          <div className="mt-3 h-px w-36 bg-parchment/30" />
-          <p className="mt-3 font-display text-base font-semibold text-parchment">
-            More than a food — It&apos;s a Lifestyle
-          </p>
-          <div className="mt-6 relative h-52 w-52 overflow-hidden rounded-full border-4 border-hitham-gold shadow-xl">
-            <Image
-              src="/hero-food.jpg"
-              alt="Fresh Ayurvedic ingredients"
-              fill
-              className="object-cover object-right-top"
-              priority
-            />
-          </div>
-          <div className="mt-7 flex flex-wrap items-center justify-center gap-3">
-            <Link
-              href="/products"
-              className="flex items-center gap-2 rounded-full bg-hitham-gold px-6 py-3 text-sm font-bold text-veda-green transition-colors hover:bg-hitham-gold-light"
-            >
-              <ShoppingBag className="h-4 w-4" />
-              Shop now
-            </Link>
-            <Link
-              href="/recommendations"
-              className="flex items-center gap-2 rounded-full border border-parchment/50 px-6 py-3 text-sm font-medium text-parchment transition-colors hover:bg-parchment/10"
-            >
-              Find your fit <ArrowRight className="h-4 w-4" />
-            </Link>
-          </div>
-        </div>
-
-        {/* DESKTOP — full banner image */}
-        <div
-          className="relative hidden lg:block"
-          style={{ minHeight: "480px" }}
-        >
-          <Image
-            src="/hero-food.jpg"
-            alt="Vedahitham — Changing The Way India Eats"
-            fill
-            className="object-cover object-center"
-            priority
-          />
-          {/* Strong left gradient covers baked-in image text */}
-          <div
-            className="absolute inset-0"
-            style={{
-              background:
-                "linear-gradient(to right, rgba(31,43,34,0.97) 0%, rgba(31,43,34,0.92) 35%, rgba(31,43,34,0.65) 55%, rgba(31,43,34,0.15) 75%, transparent 100%)",
-            }}
-          />
-          <div className="relative z-10 mx-auto flex h-full max-w-6xl items-center px-8 py-24">
-            <div className="max-w-lg">
-              <p className="font-display text-xl font-medium italic text-parchment/80">
-                Changing The Way India Eats
-              </p>
-              <div className="mt-3 h-px w-48 bg-parchment/40" />
-              <h1 className="mt-3 font-display text-6xl font-black uppercase leading-tight text-hitham-gold xl:text-7xl">
-                VEDAHITHAM
-              </h1>
-              <div className="mt-3 h-px w-48 bg-parchment/40" />
-              <p className="mt-4 font-display text-xl font-semibold text-parchment">
-                More than a food — It&apos;s a Lifestyle
-              </p>
-              <div className="mt-8 flex gap-4">
-                <Link
-                  href="/products"
-                  className="flex items-center gap-2 rounded-full bg-hitham-gold px-7 py-3.5 text-sm font-bold text-veda-green transition-colors hover:bg-hitham-gold-light"
-                >
-                  <ShoppingBag className="h-4 w-4" />
-                  Shop now
-                </Link>
-                <Link
-                  href="/recommendations"
-                  className="flex items-center gap-2 rounded-full border border-parchment/50 bg-parchment/10 px-7 py-3.5 text-sm font-medium text-parchment backdrop-blur-sm transition-colors hover:bg-parchment/20"
-                >
-                  Find your fit <ArrowRight className="h-4 w-4" />
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      {/* ============ END HERO ============ */}
+      {/* Hero Slider */}
+      <HeroSlider />
 
       {/* Why Us scrolling */}
       <WhyUsScroll />
@@ -325,7 +233,7 @@ export default function HomePage() {
               Follow us on Instagram
             </p>
           </div>
-          <p className="mt-1 text-sm text-ink-soft">@vedahitham</p>
+          <p className="mt-1 text-sm text-ink-soft">@hitham_kitchen</p>
           <div className="mt-6 grid grid-cols-3 gap-3">
             {[
               {
@@ -343,7 +251,7 @@ export default function HomePage() {
             ].map((item, i) => (
               <Link
                 key={i}
-                href="https://www.instagram.com/vedahitham"
+                href="https://www.instagram.com/hitham_kitchen?igsh=MTNvdWpxMmdsMnRmNw=="
                 target="_blank"
                 rel="noopener noreferrer"
                 className={`relative aspect-square overflow-hidden rounded-xl bg-gradient-to-br ${item.bg} flex items-center justify-center hover:opacity-90 transition-opacity`}
@@ -362,7 +270,7 @@ export default function HomePage() {
             ))}
           </div>
           <Link
-            href="https://www.instagram.com/vedahitham"
+            href="https://www.instagram.com/hitham_kitchen?igsh=MTNvdWpxMmdsMnRmNw=="
             target="_blank"
             rel="noopener noreferrer"
             className="mt-5 inline-flex items-center gap-2 rounded-full border border-veda-green px-6 py-2.5 text-sm font-medium text-veda-green transition-colors hover:bg-veda-green hover:text-parchment"
@@ -370,7 +278,7 @@ export default function HomePage() {
             <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
               <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
             </svg>
-            Follow on Instagram
+            Follow @hitham_kitchen
           </Link>
         </div>
       </section>
