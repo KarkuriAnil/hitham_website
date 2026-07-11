@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState } from "react";
 import { usePathname } from "next/navigation";
 import {
@@ -33,16 +34,18 @@ export function SiteHeader() {
   return (
     <>
       <header className="sticky top-0 z-40 border-b border-cream-border bg-parchment/95 backdrop-blur-md shadow-sm">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 lg:px-8">
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-2 lg:px-8">
 
-          {/* Logo — text based, no image */}
-          <Link href="/" className="flex flex-col leading-none">
-            <span className="font-display text-xl font-black tracking-wide text-veda-green lg:text-2xl">
-              VEDAHITHAM
-            </span>
-            <span className="text-[9px] uppercase tracking-[0.2em] text-hitham-gold">
-              — Good Food For Life —
-            </span>
+          {/* Logo */}
+          <Link href="/" className="flex items-center">
+            <Image
+              src="/logo.png"
+              alt="Vedahitham — Good Food For Life"
+              width={160}
+              height={60}
+              className="h-14 w-auto object-contain"
+              priority
+            />
           </Link>
 
           {/* Desktop nav */}
@@ -116,15 +119,14 @@ export function SiteHeader() {
           <div className="absolute right-0 top-0 h-full w-80 max-w-[85vw] bg-parchment shadow-2xl flex flex-col overflow-y-auto">
 
             {/* Panel header */}
-            <div className="flex items-center justify-between border-b border-cream-border bg-veda-green px-5 py-4 shrink-0">
-              <div className="flex flex-col leading-none">
-                <span className="font-display text-lg font-black text-parchment tracking-wide">
-                  VEDAHITHAM
-                </span>
-                <span className="text-[9px] uppercase tracking-[0.2em] text-hitham-gold">
-                  Good Food For Life
-                </span>
-              </div>
+            <div className="flex items-center justify-between border-b border-cream-border bg-veda-green px-5 py-3 shrink-0">
+              <Image
+                src="/logo.png"
+                alt="Vedahitham"
+                width={120}
+                height={45}
+                className="h-10 w-auto object-contain brightness-0 invert"
+              />
               <button
                 onClick={() => setMobileOpen(false)}
                 className="flex h-8 w-8 items-center justify-center rounded-full bg-parchment/20 text-parchment"
