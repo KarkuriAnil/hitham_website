@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { ShoppingBag, ArrowRight, Instagram } from "lucide-react";
+import { ShoppingBag, ArrowRight, Share2 } from "lucide-react";
 import { ProductCard } from "@/components/site/products/product-card";
 import { WhyUsScroll } from "@/components/site/home/why-us-scroll";
 import { IngredientsMatter } from "@/components/site/home/ingredients-matter";
@@ -20,7 +20,9 @@ export default function HomePage() {
       .then((data) => {
         if (cancelled) return;
         setProducts(data);
-        const cats = Array.from(new Set(data.map((p) => p.category).filter(Boolean)));
+        const cats = Array.from(
+          new Set(data.map((p) => p.category).filter(Boolean))
+        );
         setCategories(cats);
       })
       .catch(console.error);
@@ -36,9 +38,9 @@ export default function HomePage() {
     "Detox Drinks": "🍵",
     "Millet Products": "🌾",
     "Breakfast Kits": "🍳",
-    "Superfoods": "🥗",
-    "Beverages": "🥤",
-    "Snacks": "🫘",
+    Superfoods: "🥗",
+    Beverages: "🥤",
+    Snacks: "🫘",
   };
 
   return (
@@ -46,7 +48,8 @@ export default function HomePage() {
 
       {/* Announcement bar */}
       <div className="bg-hitham-gold py-2 text-center text-xs font-bold text-veda-green">
-        🌿 FREE shipping on all orders above ₹999 &nbsp;·&nbsp; No junk. No chemicals. No compromises.
+        🌿 FREE shipping on all orders above ₹999 &nbsp;·&nbsp; No junk. No
+        chemicals. No compromises.
       </div>
 
       {/* Hero */}
@@ -100,15 +103,47 @@ export default function HomePage() {
               {/* Gold leaf decoration top-right */}
               <div className="absolute -right-3 top-10">
                 <svg width="44" height="44" viewBox="0 0 44 44" fill="none">
-                  <ellipse cx="22" cy="11" rx="7" ry="14" fill="#C59C44" opacity="0.9" transform="rotate(-30 22 11)" />
-                  <ellipse cx="30" cy="25" rx="7" ry="14" fill="#C59C44" opacity="0.6" transform="rotate(20 30 25)" />
+                  <ellipse
+                    cx="22"
+                    cy="11"
+                    rx="7"
+                    ry="14"
+                    fill="#C59C44"
+                    opacity="0.9"
+                    transform="rotate(-30 22 11)"
+                  />
+                  <ellipse
+                    cx="30"
+                    cy="25"
+                    rx="7"
+                    ry="14"
+                    fill="#C59C44"
+                    opacity="0.6"
+                    transform="rotate(20 30 25)"
+                  />
                 </svg>
               </div>
               {/* White leaf decoration bottom-left */}
               <div className="absolute -left-3 bottom-14">
                 <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
-                  <ellipse cx="18" cy="9" rx="5" ry="11" fill="white" opacity="0.7" transform="rotate(20 18 9)" />
-                  <ellipse cx="11" cy="20" rx="5" ry="11" fill="white" opacity="0.4" transform="rotate(-20 11 20)" />
+                  <ellipse
+                    cx="18"
+                    cy="9"
+                    rx="5"
+                    ry="11"
+                    fill="white"
+                    opacity="0.7"
+                    transform="rotate(20 18 9)"
+                  />
+                  <ellipse
+                    cx="11"
+                    cy="20"
+                    rx="5"
+                    ry="11"
+                    fill="white"
+                    opacity="0.4"
+                    transform="rotate(-20 11 20)"
+                  />
                 </svg>
               </div>
             </div>
@@ -123,7 +158,9 @@ export default function HomePage() {
       {categories.length > 0 && (
         <section className="mx-auto max-w-6xl px-5 py-14 lg:px-8">
           <div className="mb-6 text-center">
-            <p className="text-xs uppercase tracking-wide text-hitham-gold">Explore</p>
+            <p className="text-xs uppercase tracking-wide text-hitham-gold">
+              Explore
+            </p>
             <h2 className="mt-1 font-display text-3xl font-bold text-veda-green">
               Browse by Category
             </h2>
@@ -152,7 +189,9 @@ export default function HomePage() {
           <div className="mx-auto max-w-6xl px-5 lg:px-8">
             <div className="mb-6 flex items-end justify-between">
               <div>
-                <p className="text-xs uppercase tracking-wide text-hitham-gold">New arrivals</p>
+                <p className="text-xs uppercase tracking-wide text-hitham-gold">
+                  New arrivals
+                </p>
                 <h2 className="mt-1 font-display text-3xl font-bold text-veda-green">
                   Latest Products
                 </h2>
@@ -182,7 +221,9 @@ export default function HomePage() {
         <section className="mx-auto max-w-6xl px-5 py-14 lg:px-8">
           <div className="mb-6 flex items-end justify-between">
             <div>
-              <p className="text-xs uppercase tracking-wide text-hitham-gold">Most loved</p>
+              <p className="text-xs uppercase tracking-wide text-hitham-gold">
+                Most loved
+              </p>
               <h2 className="mt-1 font-display text-3xl font-bold text-veda-green">
                 Best Sellers
               </h2>
@@ -255,11 +296,11 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Instagram */}
+      {/* Instagram / Social */}
       <section className="border-t border-cream-border bg-parchment py-12">
         <div className="mx-auto max-w-6xl px-5 text-center lg:px-8">
           <div className="flex items-center justify-center gap-2 text-veda-green">
-            <Instagram className="h-5 w-5" />
+            <Share2 className="h-5 w-5" />
             <p className="font-display text-xl font-bold">
               Follow us on Instagram
             </p>
@@ -274,7 +315,7 @@ export default function HomePage() {
                 rel="noopener noreferrer"
                 className="aspect-square overflow-hidden rounded-xl bg-parchment-dim border border-cream-border flex items-center justify-center text-ink-soft/40 hover:border-hitham-gold transition-colors"
               >
-                <Instagram className="h-8 w-8" />
+                <Share2 className="h-8 w-8" />
               </Link>
             ))}
           </div>
@@ -284,7 +325,7 @@ export default function HomePage() {
             rel="noopener noreferrer"
             className="mt-5 inline-flex items-center gap-2 rounded-full border border-veda-green px-6 py-2.5 text-sm font-medium text-veda-green transition-colors hover:bg-veda-green hover:text-parchment"
           >
-            <Instagram className="h-4 w-4" />
+            <Share2 className="h-4 w-4" />
             Follow on Instagram
           </Link>
         </div>
