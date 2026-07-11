@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState } from "react";
 import { usePathname } from "next/navigation";
 import { ShoppingBag, Menu, X, User as UserIcon } from "lucide-react";
@@ -24,16 +25,18 @@ export function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-40 border-b border-cream-border bg-parchment/95 backdrop-blur-md">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-3 lg:px-8">
+      <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-2 lg:px-8">
 
-        {/* Logo */}
-        <Link href="/" className="flex flex-col items-start leading-none">
-          <span className="font-display text-2xl font-bold tracking-wide text-veda-green">
-            VEDAHITHAM
-          </span>
-          <span className="brand-rule text-[9px] uppercase tracking-[0.25em] text-hitham-gold w-full">
-            Good Food For Life
-          </span>
+        {/* Real Vedahitham logo */}
+        <Link href="/" className="flex items-center">
+          <Image
+            src="/logo.png"
+            alt="Vedahitham — Good Food For Life"
+            width={160}
+            height={60}
+            className="h-14 w-auto object-contain"
+            priority
+          />
         </Link>
 
         {/* Desktop nav */}
@@ -91,8 +94,8 @@ export function SiteHeader() {
       {/* Mobile menu */}
       {mobileOpen && (
         <div className="fixed inset-0 z-50 bg-parchment lg:hidden">
-          <div className="flex items-center justify-between border-b border-cream-border px-5 py-4">
-            <span className="font-display text-xl font-bold text-veda-green">VEDAHITHAM</span>
+          <div className="flex items-center justify-between border-b border-cream-border px-5 py-3">
+            <Image src="/logo.png" alt="Vedahitham" width={120} height={45} className="h-10 w-auto" />
             <button onClick={() => setMobileOpen(false)} aria-label="Close menu">
               <X className="h-5 w-5" />
             </button>
