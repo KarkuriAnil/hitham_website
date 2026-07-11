@@ -42,7 +42,6 @@ export function IngredientsMatter() {
       angleRef.current += 0.2;
       if (orbit) {
         orbit.style.transform = `rotate(${angleRef.current}deg)`;
-        // Counter-rotate all children so labels stay upright
         const children = orbit.querySelectorAll<HTMLElement>(".ingredient-inner");
         children.forEach((child) => {
           child.style.transform = `rotate(-${angleRef.current}deg)`;
@@ -70,7 +69,7 @@ export function IngredientsMatter() {
   const center = size / 2;
   const radius = size * 0.40;
   const circleSize = size < 300 ? 56 : size < 400 ? 64 : size < 500 ? 76 : 88;
-  const centerSize = size * 0.35;
+  const centerSize = size * 0.36;
   const fontSize = size < 300 ? "text-[8px]" : size < 400 ? "text-[9px]" : "text-[11px]";
 
   return (
@@ -110,12 +109,11 @@ export function IngredientsMatter() {
           INGREDIENTS MATTER!
         </h2>
 
-        {/* Orbit */}
         <div
           className="relative mx-auto"
           style={{ width: size, height: size }}
         >
-          {/* Rotating ring */}
+          {/* Rotating ring with ingredients */}
           <div
             ref={orbitRef}
             className="absolute inset-0 will-change-transform"
@@ -133,7 +131,6 @@ export function IngredientsMatter() {
                   className="absolute"
                   style={{ left: x, top: y, width: circleSize }}
                 >
-                  {/* Counter-rotated inner so image + label stay upright */}
                   <div
                     className="ingredient-inner flex flex-col items-center gap-1"
                     style={{ transformOrigin: "center center" }}
@@ -148,10 +145,6 @@ export function IngredientsMatter() {
                         width={circleSize}
                         height={circleSize}
                         className="h-full w-full object-cover"
-                        onError={(e) => {
-                          // Fallback to colored circle if image missing
-                          (e.target as HTMLImageElement).style.display = "none";
-                        }}
                       />
                     </div>
                     <p
@@ -166,9 +159,9 @@ export function IngredientsMatter() {
             })}
           </div>
 
-          {/* Center circle — fixed */}
+          {/* Center — Vedahitham LOGO instead of cookie emoji */}
           <div
-            className="absolute z-10 flex flex-col items-center justify-center overflow-hidden rounded-full border-4 border-hitham-gold bg-parchment shadow-2xl"
+            className="absolute z-10 flex items-center justify-center overflow-hidden rounded-full border-4 border-hitham-gold bg-parchment shadow-2xl"
             style={{
               width: centerSize,
               height: centerSize,
@@ -177,13 +170,13 @@ export function IngredientsMatter() {
               transform: "translate(-50%, -50%)",
             }}
           >
-            <span style={{ fontSize: centerSize * 0.3 }}>🍪</span>
-            <p
-              className="font-bold text-veda-green text-center leading-tight px-2"
-              style={{ fontSize: Math.max(10, centerSize * 0.09) }}
-            >
-              Our Product
-            </p>
+            <Image
+              src="/logo.png"
+              alt="Vedahitham"
+              width={centerSize * 0.9}
+              height={centerSize * 0.9}
+              className="object-contain p-2"
+            />
           </div>
         </div>
 
