@@ -20,12 +20,13 @@ export default function HomePage() {
       .then((data) => {
         if (cancelled) return;
         setProducts(data);
-        // Extract unique categories from real Firebase products
         const cats = Array.from(new Set(data.map((p) => p.category).filter(Boolean)));
         setCategories(cats);
       })
       .catch(console.error);
-    return () => { cancelled = true; };
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   const latest = products.slice(0, 4);
@@ -96,13 +97,14 @@ export default function HomePage() {
                   priority
                 />
               </div>
-              {/* Gold leaf decoration */}
+              {/* Gold leaf decoration top-right */}
               <div className="absolute -right-3 top-10">
                 <svg width="44" height="44" viewBox="0 0 44 44" fill="none">
                   <ellipse cx="22" cy="11" rx="7" ry="14" fill="#C59C44" opacity="0.9" transform="rotate(-30 22 11)" />
                   <ellipse cx="30" cy="25" rx="7" ry="14" fill="#C59C44" opacity="0.6" transform="rotate(20 30 25)" />
                 </svg>
               </div>
+              {/* White leaf decoration bottom-left */}
               <div className="absolute -left-3 bottom-14">
                 <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
                   <ellipse cx="18" cy="9" rx="5" ry="11" fill="white" opacity="0.7" transform="rotate(20 18 9)" />
@@ -156,12 +158,17 @@ export default function HomePage() {
                 </h2>
                 <div className="mt-1 h-0.5 w-16 bg-hitham-gold" />
               </div>
-              <Link href="/products" className="flex items-center gap-1 text-sm font-medium text-veda-green hover:text-hitham-gold">
+              <Link
+                href="/products"
+                className="flex items-center gap-1 text-sm font-medium text-veda-green hover:text-hitham-gold"
+              >
                 View all <ArrowRight className="h-4 w-4" />
               </Link>
             </div>
             <div className="grid grid-cols-2 gap-5 sm:grid-cols-4">
-              {latest.map((p) => <ProductCard key={p.id} product={p} />)}
+              {latest.map((p) => (
+                <ProductCard key={p.id} product={p} />
+              ))}
             </div>
           </div>
         </section>
@@ -176,15 +183,22 @@ export default function HomePage() {
           <div className="mb-6 flex items-end justify-between">
             <div>
               <p className="text-xs uppercase tracking-wide text-hitham-gold">Most loved</p>
-              <h2 className="mt-1 font-display text-3xl font-bold text-veda-green">Best Sellers</h2>
+              <h2 className="mt-1 font-display text-3xl font-bold text-veda-green">
+                Best Sellers
+              </h2>
               <div className="mt-1 h-0.5 w-16 bg-hitham-gold" />
             </div>
-            <Link href="/products" className="flex items-center gap-1 text-sm font-medium text-veda-green hover:text-hitham-gold">
+            <Link
+              href="/products"
+              className="flex items-center gap-1 text-sm font-medium text-veda-green hover:text-hitham-gold"
+            >
               View all <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-3">
-            {bestSellers.map((p) => <ProductCard key={p.id} product={p} />)}
+            {bestSellers.map((p) => (
+              <ProductCard key={p.id} product={p} />
+            ))}
           </div>
         </section>
       )}
@@ -194,19 +208,25 @@ export default function HomePage() {
         <div className="mx-auto max-w-5xl px-5 lg:px-8">
           <div className="grid gap-10 lg:grid-cols-2 lg:items-center">
             <div>
-              <p className="text-xs uppercase tracking-wide text-hitham-gold">The heart behind Vedahitham</p>
+              <p className="text-xs uppercase tracking-wide text-hitham-gold">
+                The heart behind Vedahitham
+              </p>
               <h2 className="mt-2 font-display text-3xl font-bold text-veda-green lg:text-4xl">
                 Meet the Founder
               </h2>
               <div className="mt-1 h-0.5 w-16 bg-hitham-gold" />
               <p className="mt-5 text-base leading-relaxed text-ink-soft">
-                Hi! I&apos;m <strong className="text-veda-green">Ashwini Reddy</strong>, a certified Ayurvedic
-                Nutritionist. What began as my personal journey in my own kitchen has grown into a community
-                proving healthy never has to be boring.
+                Hi! I&apos;m{" "}
+                <strong className="text-veda-green">Ashwini Reddy</strong>, a
+                certified Ayurvedic Nutritionist. What began as my personal
+                journey in my own kitchen has grown into a community proving
+                healthy never has to be boring.
               </p>
               <p className="mt-3 text-base leading-relaxed text-ink-soft">
                 Every recipe carries my promise:{" "}
-                <strong className="text-veda-green">no junk, no chemicals, no sugar, no refined oils.</strong>
+                <strong className="text-veda-green">
+                  no junk, no chemicals, no sugar, no refined oils.
+                </strong>
               </p>
               <Link
                 href="/about"
@@ -218,13 +238,15 @@ export default function HomePage() {
             <div className="flex items-center justify-center">
               <div className="relative h-72 w-72">
                 <div className="absolute inset-0 rounded-full border-[8px] border-hitham-gold opacity-40" />
-                <div className="absolute inset-3 overflow-hidden rounded-full bg-parchment-dim flex items-center justify-center">
+                <div className="absolute inset-3 overflow-hidden rounded-full bg-parchment-dim">
                   <Image
                     src="/founder.jpg"
                     alt="Ashwini Reddy - Founder"
                     fill
                     className="object-cover rounded-full"
-                    onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).style.display = "none";
+                    }}
                   />
                 </div>
               </div>
@@ -238,12 +260,14 @@ export default function HomePage() {
         <div className="mx-auto max-w-6xl px-5 text-center lg:px-8">
           <div className="flex items-center justify-center gap-2 text-veda-green">
             <Instagram className="h-5 w-5" />
-            <p className="font-display text-xl font-bold">Follow us on Instagram</p>
+            <p className="font-display text-xl font-bold">
+              Follow us on Instagram
+            </p>
           </div>
           <p className="mt-1 text-sm text-ink-soft">@vedahitham</p>
           <div className="mt-6 grid grid-cols-3 gap-3 sm:gap-4">
             {[1, 2, 3].map((i) => (
-              
+              <Link
                 key={i}
                 href="https://instagram.com/vedahitham"
                 target="_blank"
@@ -251,9 +275,18 @@ export default function HomePage() {
                 className="aspect-square overflow-hidden rounded-xl bg-parchment-dim border border-cream-border flex items-center justify-center text-ink-soft/40 hover:border-hitham-gold transition-colors"
               >
                 <Instagram className="h-8 w-8" />
-              </a>
+              </Link>
             ))}
           </div>
+          <Link
+            href="https://instagram.com/vedahitham"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-5 inline-flex items-center gap-2 rounded-full border border-veda-green px-6 py-2.5 text-sm font-medium text-veda-green transition-colors hover:bg-veda-green hover:text-parchment"
+          >
+            <Instagram className="h-4 w-4" />
+            Follow on Instagram
+          </Link>
         </div>
       </section>
 
@@ -268,7 +301,9 @@ export default function HomePage() {
               { label: "Made with Joy", sub: "Every batch, handcrafted" },
             ].map((item) => (
               <div key={item.label}>
-                <p className="font-display text-lg font-bold text-hitham-gold">{item.label}</p>
+                <p className="font-display text-lg font-bold text-hitham-gold">
+                  {item.label}
+                </p>
                 <p className="mt-0.5 text-xs text-parchment/60">{item.sub}</p>
               </div>
             ))}
