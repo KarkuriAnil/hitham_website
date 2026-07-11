@@ -1,37 +1,77 @@
+"use client";
+
+import { useEffect, useRef } from "react";
+
 const INGREDIENTS = [
-  { name: "Almonds", emoji: "🥜", color: "#c8a882" },
-  { name: "Jaggery", emoji: "🍯", color: "#c4902a" },
-  { name: "Flax Seeds", emoji: "🌰", color: "#8b6914" },
-  { name: "Pumpkin Seeds", emoji: "🎃", color: "#5a8a3a" },
-  { name: "Ragi", emoji: "🌾", color: "#8b6914" },
-  { name: "Pure Butter", emoji: "🧈", color: "#f5d060" },
+  { name: "Almonds", emoji: "🥜" },
+  { name: "Jaggery", emoji: "🍯" },
+  { name: "Flax Seeds", emoji: "🌰" },
+  { name: "Pumpkin Seeds", emoji: "🎃" },
+  { name: "Ragi", emoji: "🌾" },
+  { name: "Pure Butter", emoji: "🧈" },
 ];
 
 export function IngredientsMatter() {
+  const orbitRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const orbit = orbitRef.current;
+    if (!orbit) return;
+
+    let angle = 0;
+    let animationId: number;
+
+    function animate() {
+      angle += 0.3; // degrees per frame — lower = slower
+      if (orbit) {
+        orbit.style.transform = `rotate(${angle}deg)`;
+      }
+      animationId = requestAnimationFrame(animate);
+    }
+
+    animationId = requestAnimationFrame(animate);
+
+    // Pause on hover
+    const container = orbit.parentElement;
+    function pause() { cancelAnimationFrame(animationId); }
+    function resume() { animationId = requestAnimationFrame(animate); }
+    container?.addEventListener("mouseenter", pause);
+    container?.addEventListener("mouseleave", resume);
+
+    return () => {
+      cancelAnimationFrame(animationId);
+      container?.removeEventListener("mouseenter", pause);
+      container?.removeEventListener("mouseleave", resume);
+    };
+  }, []);
+
+  const total = INGREDIENTS.length;
+
   return (
     <section
-      className="relative overflow-hidden py-14"
+      className="relative overflow-hidden py-20"
       style={{
-        background: "linear-gradient(135deg, #e8f5e8 0%, #f5faf0 40%, #fafaf0 70%, #f5f5e0 100%)",
+        background:
+          "linear-gradient(135deg, #e8f5e8 0%, #f5faf0 40%, #fafaf0 70%, #f5f5e0 100%)",
       }}
     >
-      {/* Yellow paint splash dots — decorative */}
+      {/* Decorative gold dots */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         {[
-          { top: "5%", left: "3%", size: 40, opacity: 0.6 },
-          { top: "15%", right: "5%", size: 30, opacity: 0.5 },
-          { top: "60%", left: "1%", size: 50, opacity: 0.4 },
-          { bottom: "10%", right: "8%", size: 35, opacity: 0.6 },
-          { top: "40%", right: "2%", size: 25, opacity: 0.5 },
+          { top: "8%", left: "4%", size: 45 },
+          { top: "70%", left: "2%", size: 30 },
+          { bottom: "15%", left: "6%", size: 55 },
+          { top: "10%", right: "5%", size: 35 },
+          { top: "50%", right: "3%", size: 25 },
+          { bottom: "8%", right: "6%", size: 40 },
         ].map((dot, i) => (
           <div
             key={i}
-            className="absolute rounded-full bg-hitham-gold"
+            className="absolute rounded-full bg-hitham-gold opacity-50"
             style={{
               width: dot.size,
               height: dot.size,
-              opacity: dot.opacity,
-              top: dot.top,
+              top: (dot as { top?: string }).top,
               left: (dot as { left?: string }).left,
               right: (dot as { right?: string }).right,
               bottom: (dot as { bottom?: string }).bottom,
@@ -41,56 +81,86 @@ export function IngredientsMatter() {
       </div>
 
       <div className="relative mx-auto max-w-5xl px-5 lg:px-8">
-        <h2 className="mb-10 text-center font-display text-4xl font-black text-veda-green lg:text-5xl">
+        {/* Title */}
+        <h2 className="mb-16 text-center font-display text-4xl font-black text-veda-green lg:text-5xl">
           INGREDIENTS MATTER!
         </h2>
 
-        {/* Central product image + surrounding ingredient circles */}
-        <div className="relative flex items-center justify-center">
-          {/* Central large circle */}
-          <div className="relative z-10 flex h-52 w-52 items-center justify-center overflow-hidden rounded-full border-4 border-hitham-gold bg-parchment-dim shadow-xl lg:h-64 lg:w-64">
-            <span className="text-6xl">🍪</span>
-            <p className="absolute bottom-3 text-xs font-bold text-veda-green">Our Product</p>
+        {/* Orbit container */}
+        <div className="relative mx-auto" style={{ width: 420, height: 420 }}>
+
+          {/* Rotating orbit ring — holds ingredient circles */}
+          <div
+            ref={orbitRef}
+            className="absolute inset-0 will-change-transform"
+            style={{ transformOrigin: "center center" }}
+          >
+            {INGREDIENTS.map((ingredient, i) => {
+              const angleDeg = (i / total) * 360 - 90;
+              const angleRad = (angleDeg * Math.PI) / 180;
+              const radius = 175;
+              const cx = 210; // center x
+              const cy = 210; // center y
+              const x = cx + Math.cos(angleRad) * radius - 44; // 44 = half of circle width
+              const y = cy + Math.sin(angleRad) * radius - 44;
+
+              return (
+                <div
+                  key={ingredient.name}
+                  className="absolute flex flex-col items-center gap-1"
+                  style={{ left: x, top: y, width: 88 }}
+                >
+                  {/* Counter-rotate the label+emoji so they stay upright */}
+                  <div
+                    className="flex flex-col items-center gap-1"
+                    style={{
+                      animation: "counter-rotate linear infinite",
+                      animationDuration: "inherit",
+                    }}
+                  >
+                    <div className="flex h-20 w-20 items-center justify-center overflow-hidden rounded-full border-2 border-white bg-parchment shadow-md text-3xl">
+                      {ingredient.emoji}
+                    </div>
+                    <p className="text-center text-[11px] font-semibold text-veda-green whitespace-nowrap">
+                      {ingredient.name}
+                    </p>
+                  </div>
+                </div>
+              );
+            })}
           </div>
 
-          {/* Surrounding ingredient circles */}
-          {INGREDIENTS.map((ingredient, i) => {
-            const total = INGREDIENTS.length;
-            const angle = (i / total) * 2 * Math.PI - Math.PI / 2;
-            const radius = 180;
-            const x = Math.cos(angle) * radius;
-            const y = Math.sin(angle) * radius;
-
-            return (
-              <div
-                key={ingredient.name}
-                className="absolute flex flex-col items-center gap-1"
-                style={{
-                  transform: `translate(${x}px, ${y}px)`,
-                }}
-              >
-                <div
-                  className="flex h-20 w-20 items-center justify-center overflow-hidden rounded-full border-2 border-white shadow-md text-3xl lg:h-24 lg:w-24"
-                  style={{ backgroundColor: ingredient.color + "22" }}
-                >
-                  {ingredient.emoji}
-                </div>
-                <p className="text-center text-[11px] font-semibold text-veda-green">
-                  {ingredient.name}
-                </p>
-              </div>
-            );
-          })}
+          {/* Center product circle — stays fixed */}
+          <div
+            className="absolute flex flex-col items-center justify-center overflow-hidden rounded-full border-4 border-hitham-gold bg-parchment shadow-xl"
+            style={{
+              width: 180,
+              height: 180,
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              zIndex: 10,
+            }}
+          >
+            <span className="text-5xl">🍪</span>
+            <p className="mt-1 text-xs font-bold text-veda-green">Our Product</p>
+          </div>
         </div>
 
-        {/* Bottom padding for ingredient labels */}
-        <div className="mt-48 lg:mt-56" />
-
-        <p className="text-center text-sm text-ink-soft max-w-lg mx-auto">
-          Every ingredient we use is traceable, clean, and chosen with intention.
+        {/* Bottom text */}
+        <p className="mx-auto mt-16 max-w-lg text-center text-sm text-ink-soft">
+          Every ingredient is traceable, clean, and chosen with intention.
           No fillers. No preservatives. Just real food.
         </p>
       </div>
+
+      {/* CSS for counter-rotation so labels stay readable */}
+      <style>{`
+        @keyframes counter-rotate {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(-360deg); }
+        }
+      `}</style>
     </section>
   );
 }
