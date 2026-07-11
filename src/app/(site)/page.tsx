@@ -43,6 +43,15 @@ export default function HomePage() {
     Snacks: "🫘",
   };
 
+  const FALLBACK_CATEGORIES = [
+    { label: "Detox Drinks", emoji: "🍵" },
+    { label: "Millet Products", emoji: "🌾" },
+    { label: "Breakfast Kits", emoji: "🍳" },
+    { label: "Superfoods", emoji: "🥗" },
+    { label: "Beverages", emoji: "🥤" },
+    { label: "Snacks", emoji: "🫘" },
+  ];
+
   return (
     <div className="bg-parchment">
 
@@ -54,22 +63,22 @@ export default function HomePage() {
 
       {/* Hero */}
       <section className="relative overflow-hidden bg-veda-green">
-        <div className="mx-auto flex max-w-6xl items-center px-5 py-16 lg:px-8 lg:py-24">
+        <div className="mx-auto flex max-w-6xl flex-col items-center gap-8 px-5 py-14 lg:flex-row lg:px-8 lg:py-24">
 
           {/* Left text */}
-          <div className="flex-1 lg:pr-8">
-            <p className="font-display text-lg font-medium italic text-parchment/70 lg:text-xl">
+          <div className="flex-1 text-center lg:text-left lg:pr-8">
+            <p className="font-display text-base font-medium italic text-parchment/70 lg:text-xl">
               Changing The Way India Eats
             </p>
-            <div className="mt-2 h-px w-48 bg-parchment/30" />
-            <h1 className="mt-3 font-display text-5xl font-black uppercase leading-tight text-hitham-gold lg:text-6xl xl:text-7xl">
+            <div className="mt-2 mx-auto h-px w-48 bg-parchment/30 lg:mx-0" />
+            <h1 className="mt-3 font-display text-4xl font-black uppercase leading-tight text-hitham-gold lg:text-6xl xl:text-7xl">
               VEDAHITHAM
             </h1>
-            <div className="mt-3 h-px w-48 bg-parchment/30" />
-            <p className="mt-4 font-display text-lg font-semibold text-parchment lg:text-xl">
+            <div className="mt-3 mx-auto h-px w-48 bg-parchment/30 lg:mx-0" />
+            <p className="mt-4 font-display text-base font-semibold text-parchment lg:text-xl">
               More than a food — It&apos;s a Lifestyle
             </p>
-            <div className="mt-8 flex flex-wrap gap-4">
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-4 lg:justify-start">
               <Link
                 href="/products"
                 className="flex items-center gap-2 rounded-full bg-hitham-gold px-7 py-3.5 text-sm font-bold text-veda-green transition-colors hover:bg-hitham-gold-light"
@@ -87,11 +96,11 @@ export default function HomePage() {
           </div>
 
           {/* Right circular food image */}
-          <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-center">
-            <div className="relative h-[400px] w-[400px]">
-              <div className="absolute inset-0 rounded-full border-[12px] border-hitham-gold opacity-50" />
-              <div className="absolute inset-5 rounded-full border-[6px] border-hitham-gold opacity-30" />
-              <div className="absolute inset-8 overflow-hidden rounded-full">
+          <div className="flex items-center justify-center">
+            <div className="relative h-[280px] w-[280px] lg:h-[400px] lg:w-[400px]">
+              <div className="absolute inset-0 rounded-full border-[10px] border-hitham-gold opacity-50" />
+              <div className="absolute inset-4 rounded-full border-[5px] border-hitham-gold opacity-30" />
+              <div className="absolute inset-7 overflow-hidden rounded-full">
                 <Image
                   src="/hero-food.jpg"
                   alt="Fresh Ayurvedic ingredients"
@@ -101,47 +110,31 @@ export default function HomePage() {
                 />
               </div>
               {/* Gold leaf decoration top-right */}
-              <div className="absolute -right-3 top-10">
-                <svg width="44" height="44" viewBox="0 0 44 44" fill="none">
+              <div className="absolute -right-2 top-8">
+                <svg width="36" height="36" viewBox="0 0 44 44" fill="none">
                   <ellipse
-                    cx="22"
-                    cy="11"
-                    rx="7"
-                    ry="14"
-                    fill="#C59C44"
-                    opacity="0.9"
+                    cx="22" cy="11" rx="7" ry="14"
+                    fill="#C59C44" opacity="0.9"
                     transform="rotate(-30 22 11)"
                   />
                   <ellipse
-                    cx="30"
-                    cy="25"
-                    rx="7"
-                    ry="14"
-                    fill="#C59C44"
-                    opacity="0.6"
+                    cx="30" cy="25" rx="7" ry="14"
+                    fill="#C59C44" opacity="0.6"
                     transform="rotate(20 30 25)"
                   />
                 </svg>
               </div>
               {/* White leaf decoration bottom-left */}
-              <div className="absolute -left-3 bottom-14">
-                <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+              <div className="absolute -left-2 bottom-10">
+                <svg width="28" height="28" viewBox="0 0 36 36" fill="none">
                   <ellipse
-                    cx="18"
-                    cy="9"
-                    rx="5"
-                    ry="11"
-                    fill="white"
-                    opacity="0.7"
+                    cx="18" cy="9" rx="5" ry="11"
+                    fill="white" opacity="0.7"
                     transform="rotate(20 18 9)"
                   />
                   <ellipse
-                    cx="11"
-                    cy="20"
-                    rx="5"
-                    ry="11"
-                    fill="white"
-                    opacity="0.4"
+                    cx="11" cy="20" rx="5" ry="11"
+                    fill="white" opacity="0.4"
                     transform="rotate(-20 11 20)"
                   />
                 </svg>
@@ -154,45 +147,63 @@ export default function HomePage() {
       {/* Why Us — auto-scrolling */}
       <WhyUsScroll />
 
-      {/* Browse by Category — from Firebase */}
-      {categories.length > 0 && (
-        <section className="mx-auto max-w-6xl px-5 py-14 lg:px-8">
-          <div className="mb-6 text-center">
-            <p className="text-xs uppercase tracking-wide text-hitham-gold">
-              Explore
-            </p>
-            <h2 className="mt-1 font-display text-3xl font-bold text-veda-green">
-              Browse by Category
-            </h2>
-            <div className="mt-2 flex justify-center">
-              <div className="h-0.5 w-16 bg-hitham-gold" />
-            </div>
+      {/* Browse by Category */}
+      <section className="mx-auto max-w-6xl px-4 py-12 lg:px-8">
+        <div className="mb-8 text-center">
+          <p className="text-xs uppercase tracking-wide text-hitham-gold">
+            Explore
+          </p>
+          <h2 className="mt-1 font-display text-3xl font-bold text-veda-green">
+            Browse by Category
+          </h2>
+          <div className="mt-2 flex justify-center">
+            <div className="h-0.5 w-16 bg-hitham-gold" />
           </div>
+        </div>
+
+        {categories.length === 0 ? (
+          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
+            {FALLBACK_CATEGORIES.map((cat) => (
+              <Link
+                key={cat.label}
+                href={`/products?category=${encodeURIComponent(cat.label)}`}
+                className="flex flex-col items-center gap-3 rounded-2xl border border-cream-border bg-white p-5 text-center transition-all hover:border-hitham-gold hover:shadow-md"
+              >
+                <span className="text-4xl">{cat.emoji}</span>
+                <p className="text-xs font-semibold leading-tight text-veda-green">
+                  {cat.label}
+                </p>
+              </Link>
+            ))}
+          </div>
+        ) : (
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
             {categories.map((cat) => (
               <Link
                 key={cat}
                 href={`/products?category=${encodeURIComponent(cat)}`}
-                className="group flex flex-col items-center gap-2 rounded-2xl border border-cream-border bg-white p-5 text-center transition-all hover:border-hitham-gold hover:shadow-sm"
+                className="flex flex-col items-center gap-3 rounded-2xl border border-cream-border bg-white p-5 text-center transition-all hover:border-hitham-gold hover:shadow-md"
               >
-                <span className="text-3xl">{CATEGORY_EMOJI[cat] || "🌿"}</span>
-                <p className="text-xs font-semibold text-veda-green">{cat}</p>
+                <span className="text-4xl">{CATEGORY_EMOJI[cat] || "🌿"}</span>
+                <p className="text-xs font-semibold leading-tight text-veda-green">
+                  {cat}
+                </p>
               </Link>
             ))}
           </div>
-        </section>
-      )}
+        )}
+      </section>
 
       {/* Latest Products */}
       {latest.length > 0 && (
         <section className="bg-parchment-dim py-14">
-          <div className="mx-auto max-w-6xl px-5 lg:px-8">
+          <div className="mx-auto max-w-6xl px-4 lg:px-8">
             <div className="mb-6 flex items-end justify-between">
               <div>
                 <p className="text-xs uppercase tracking-wide text-hitham-gold">
                   New arrivals
                 </p>
-                <h2 className="mt-1 font-display text-3xl font-bold text-veda-green">
+                <h2 className="mt-1 font-display text-2xl font-bold text-veda-green lg:text-3xl">
                   Latest Products
                 </h2>
                 <div className="mt-1 h-0.5 w-16 bg-hitham-gold" />
@@ -204,7 +215,7 @@ export default function HomePage() {
                 View all <ArrowRight className="h-4 w-4" />
               </Link>
             </div>
-            <div className="grid grid-cols-2 gap-5 sm:grid-cols-4">
+            <div className="grid grid-cols-2 gap-4 sm:grid-cols-4 lg:gap-5">
               {latest.map((p) => (
                 <ProductCard key={p.id} product={p} />
               ))}
@@ -218,13 +229,13 @@ export default function HomePage() {
 
       {/* Best Sellers */}
       {bestSellers.length > 0 && (
-        <section className="mx-auto max-w-6xl px-5 py-14 lg:px-8">
+        <section className="mx-auto max-w-6xl px-4 py-14 lg:px-8">
           <div className="mb-6 flex items-end justify-between">
             <div>
               <p className="text-xs uppercase tracking-wide text-hitham-gold">
                 Most loved
               </p>
-              <h2 className="mt-1 font-display text-3xl font-bold text-veda-green">
+              <h2 className="mt-1 font-display text-2xl font-bold text-veda-green lg:text-3xl">
                 Best Sellers
               </h2>
               <div className="mt-1 h-0.5 w-16 bg-hitham-gold" />
@@ -236,7 +247,7 @@ export default function HomePage() {
               View all <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
-          <div className="grid grid-cols-1 gap-5 sm:grid-cols-3">
+          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:gap-5">
             {bestSellers.map((p) => (
               <ProductCard key={p.id} product={p} />
             ))}
@@ -246,9 +257,9 @@ export default function HomePage() {
 
       {/* Meet the Founder */}
       <section className="bg-hitham-gold-dim py-14">
-        <div className="mx-auto max-w-5xl px-5 lg:px-8">
+        <div className="mx-auto max-w-5xl px-4 lg:px-8">
           <div className="grid gap-10 lg:grid-cols-2 lg:items-center">
-            <div>
+            <div className="order-2 lg:order-1">
               <p className="text-xs uppercase tracking-wide text-hitham-gold">
                 The heart behind Vedahitham
               </p>
@@ -276,8 +287,9 @@ export default function HomePage() {
                 Our full story <ArrowRight className="h-4 w-4" />
               </Link>
             </div>
-            <div className="flex items-center justify-center">
-              <div className="relative h-72 w-72">
+
+            <div className="order-1 flex items-center justify-center lg:order-2">
+              <div className="relative h-60 w-60 lg:h-72 lg:w-72">
                 <div className="absolute inset-0 rounded-full border-[8px] border-hitham-gold opacity-40" />
                 <div className="absolute inset-3 overflow-hidden rounded-full bg-parchment-dim">
                   <Image
@@ -298,7 +310,7 @@ export default function HomePage() {
 
       {/* Instagram / Social */}
       <section className="border-t border-cream-border bg-parchment py-12">
-        <div className="mx-auto max-w-6xl px-5 text-center lg:px-8">
+        <div className="mx-auto max-w-6xl px-4 text-center lg:px-8">
           <div className="flex items-center justify-center gap-2 text-veda-green">
             <Share2 className="h-5 w-5" />
             <p className="font-display text-xl font-bold">
@@ -333,7 +345,7 @@ export default function HomePage() {
 
       {/* Trust bar */}
       <section className="bg-veda-green py-8">
-        <div className="mx-auto max-w-6xl px-5 lg:px-8">
+        <div className="mx-auto max-w-6xl px-4 lg:px-8">
           <div className="grid grid-cols-2 gap-6 text-center sm:grid-cols-4">
             {[
               { label: "100% Natural", sub: "No artificial anything" },
@@ -342,7 +354,7 @@ export default function HomePage() {
               { label: "Made with Joy", sub: "Every batch, handcrafted" },
             ].map((item) => (
               <div key={item.label}>
-                <p className="font-display text-lg font-bold text-hitham-gold">
+                <p className="font-display text-base font-bold text-hitham-gold lg:text-lg">
                   {item.label}
                 </p>
                 <p className="mt-0.5 text-xs text-parchment/60">{item.sub}</p>
