@@ -4,7 +4,13 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 import { usePathname } from "next/navigation";
-import { ShoppingBag, Menu, X, User as UserIcon, ChevronRight } from "lucide-react";
+import {
+  ShoppingBag,
+  Menu,
+  X,
+  User as UserIcon,
+  ChevronRight,
+} from "lucide-react";
 import { useCart } from "@/components/site/cart/cart-context";
 import { useAuth } from "@/components/site/auth/auth-context";
 import { cn } from "@/lib/utils";
@@ -43,7 +49,9 @@ export function SiteHeader() {
           {/* Desktop nav */}
           <nav className="hidden items-center gap-6 lg:flex">
             {NAV_LINKS.map((link) => {
-              const active = pathname === link.href || pathname.startsWith(link.href + "/");
+              const active =
+                pathname === link.href ||
+                pathname.startsWith(link.href + "/");
               return (
                 <Link
                   key={link.href}
@@ -68,14 +76,16 @@ export function SiteHeader() {
               className="hidden items-center gap-1.5 rounded-full border border-cream-border px-3 py-1.5 text-xs font-medium text-ink transition-colors hover:border-hitham-gold hover:text-veda-green lg:flex"
             >
               <UserIcon className="h-3.5 w-3.5" />
-              {user ? profile?.fullName?.split(" ")[0] || "Account" : "Sign in"}
+              {user
+                ? profile?.fullName?.split(" ")[0] || "Account"
+                : "Sign in"}
             </Link>
 
             <Link
               href="/cart"
               className="relative flex h-9 w-9 items-center justify-center rounded-full bg-veda-green text-parchment transition-colors hover:bg-veda-green-light"
             >
-              <ShoppingBag className="h-4.5 w-4.5" />
+              <ShoppingBag className="h-4 w-4" />
               {itemCount > 0 && (
                 <span className="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-hitham-gold text-[10px] font-bold text-white">
                   {itemCount > 9 ? "9+" : itemCount}
@@ -104,8 +114,8 @@ export function SiteHeader() {
             onClick={() => setMobileOpen(false)}
           />
 
-          {/* Slide-in panel */}
-          <div className="absolute right-0 top-0 h-full w-80 bg-parchment shadow-2xl flex flex-col">
+          {/* Slide-in panel from right */}
+          <div className="absolute right-0 top-0 h-full w-80 max-w-[85vw] bg-parchment shadow-2xl flex flex-col">
 
             {/* Panel header */}
             <div className="flex items-center justify-between border-b border-cream-border bg-veda-green px-5 py-4">
@@ -125,7 +135,7 @@ export function SiteHeader() {
               </button>
             </div>
 
-            {/* User greeting */}
+            {/* User greeting or sign in */}
             {user ? (
               <div className="border-b border-cream-border bg-hitham-gold-dim px-5 py-3">
                 <p className="text-xs text-ink-soft">Welcome back</p>
@@ -150,7 +160,9 @@ export function SiteHeader() {
             <nav className="flex-1 overflow-y-auto px-4 py-4">
               <div className="flex flex-col gap-1">
                 {NAV_LINKS.map((link) => {
-                  const active = pathname === link.href || pathname.startsWith(link.href + "/");
+                  const active =
+                    pathname === link.href ||
+                    pathname.startsWith(link.href + "/");
                   return (
                     <Link
                       key={link.href}
@@ -164,10 +176,15 @@ export function SiteHeader() {
                       )}
                     >
                       <span className="flex items-center gap-3">
-                        <span className="text-lg">{link.emoji}</span>
+                        <span className="text-xl">{link.emoji}</span>
                         {link.label}
                       </span>
-                      <ChevronRight className={cn("h-4 w-4", active ? "text-parchment/70" : "text-ink-soft")} />
+                      <ChevronRight
+                        className={cn(
+                          "h-4 w-4",
+                          active ? "text-parchment/70" : "text-ink-soft"
+                        )}
+                      />
                     </Link>
                   );
                 })}
@@ -203,7 +220,7 @@ export function SiteHeader() {
               )}
             </div>
 
-            {/* Brand tagline */}
+            {/* Brand tagline at bottom */}
             <div className="bg-hitham-gold px-5 py-3 text-center">
               <p className="text-xs font-bold text-veda-green">
                 🌿 Good Food For Life
