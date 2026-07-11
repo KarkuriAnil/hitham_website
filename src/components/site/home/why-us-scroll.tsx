@@ -13,7 +13,6 @@ const BADGES = [
   { label: "Egg Free", emoji: "🥚" },
 ];
 
-// Duplicate badges so the scroll loops seamlessly
 const DOUBLED = [...BADGES, ...BADGES, ...BADGES];
 
 export function WhyUsScroll() {
@@ -25,24 +24,32 @@ export function WhyUsScroll() {
 
     let animationId: number;
     let position = 0;
-    const speed = 0.5; // px per frame — adjust for faster/slower
-    const totalWidth = track.scrollWidth / 3; // one set width
+    const speed = 0.5;
+    const totalWidth = track.scrollWidth / 3;
 
     function animate() {
       position += speed;
       if (position >= totalWidth) {
         position = 0;
       }
-      track.style.transform = `translateX(-${position}px)`;
+      if (track) {
+        track.style.transform = `translateX(-${position}px)`;
+      }
       animationId = requestAnimationFrame(animate);
     }
 
     animationId = requestAnimationFrame(animate);
 
-    // Pause on hover
     const container = track.parentElement;
-    const pause = () => cancelAnimationFrame(animationId);
-    const resume = () => { animationId = requestAnimationFrame(animate); };
+
+    function pause() {
+      cancelAnimationFrame(animationId);
+    }
+
+    function resume() {
+      animationId = requestAnimationFrame(animate);
+    }
+
     container?.addEventListener("mouseenter", pause);
     container?.addEventListener("mouseleave", resume);
 
@@ -59,7 +66,10 @@ export function WhyUsScroll() {
         Why Us?
       </h2>
       <div className="overflow-hidden">
-        <div ref={trackRef} className="flex gap-8 w-max will-change-transform">
+        <div
+          ref={trackRef}
+          className="flex gap-8 w-max will-change-transform"
+        >
           {DOUBLED.map((badge, i) => (
             <div
               key={i}
