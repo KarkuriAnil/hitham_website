@@ -1,28 +1,31 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 
 const INGREDIENTS = [
-  { name: "Almonds", emoji: "🥜" },
-  { name: "Jaggery", emoji: "🍯" },
-  { name: "Flax Seeds", emoji: "🌰" },
-  { name: "Pumpkin Seeds", emoji: "🎃" },
-  { name: "Ragi", emoji: "🌾" },
-  { name: "Pure Butter", emoji: "🧈" },
+  { name: "Millets", image: "/ingredients/millets.jpg" },
+  { name: "Desi Rice", image: "/ingredients/desi-rice.jpg" },
+  { name: "Wood Pressed Oils", image: "/ingredients/wood-pressed-oils.jpg" },
+  { name: "Stevia & Monk Fruit", image: "/ingredients/stevia.jpg" },
+  { name: "Palm Jaggery", image: "/ingredients/palm-jaggery.jpg" },
+  { name: "Non-Iodised Salt", image: "/ingredients/salt.jpg" },
+  { name: "Protein Pulses", image: "/ingredients/pulses.jpg" },
+  { name: "Ayurvedic Herbs", image: "/ingredients/herbs.jpg" },
 ];
 
 export function IngredientsMatter() {
   const orbitRef = useRef<HTMLDivElement>(null);
+  const angleRef = useRef(0);
   const [size, setSize] = useState(340);
 
-  // Responsive orbit size
   useEffect(() => {
     function updateSize() {
       const w = window.innerWidth;
       if (w < 400) setSize(260);
       else if (w < 640) setSize(300);
-      else if (w < 1024) setSize(340);
-      else setSize(420);
+      else if (w < 1024) setSize(360);
+      else setSize(460);
     }
     updateSize();
     window.addEventListener("resize", updateSize);
@@ -33,13 +36,17 @@ export function IngredientsMatter() {
     const orbit = orbitRef.current;
     if (!orbit) return;
 
-    let angle = 0;
     let animationId: number;
 
     function animate() {
-      angle += 0.25;
+      angleRef.current += 0.2;
       if (orbit) {
-        orbit.style.transform = `rotate(${angle}deg)`;
+        orbit.style.transform = `rotate(${angleRef.current}deg)`;
+        // Counter-rotate all children so labels stay upright
+        const children = orbit.querySelectorAll<HTMLElement>(".ingredient-inner");
+        children.forEach((child) => {
+          child.style.transform = `rotate(-${angleRef.current}deg)`;
+        });
       }
       animationId = requestAnimationFrame(animate);
     }
@@ -61,34 +68,34 @@ export function IngredientsMatter() {
 
   const total = INGREDIENTS.length;
   const center = size / 2;
-  const radius = size * 0.38;
-  const circleSize = size < 300 ? 52 : size < 380 ? 60 : 72;
-  const centerCircle = size * 0.38;
-  const fontSize = size < 300 ? "text-[9px]" : "text-[11px]";
-  const centerEmoji = size < 300 ? "text-3xl" : "text-5xl";
+  const radius = size * 0.40;
+  const circleSize = size < 300 ? 56 : size < 400 ? 64 : size < 500 ? 76 : 88;
+  const centerSize = size * 0.35;
+  const fontSize = size < 300 ? "text-[8px]" : size < 400 ? "text-[9px]" : "text-[11px]";
 
   return (
     <section
       className="relative overflow-hidden py-12 lg:py-20"
       style={{
-        background: "linear-gradient(135deg, #e8f5e8 0%, #f5faf0 40%, #fafaf0 70%, #f5f5e0 100%)",
+        background:
+          "linear-gradient(135deg, #e8f5e8 0%, #f5faf0 40%, #fafaf0 70%, #f5f5e0 100%)",
       }}
     >
-      {/* Decorative gold dots — only on larger screens */}
+      {/* Decorative gold dots */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden hidden sm:block">
         {[
-          { top: "8%", left: "3%", size: 40 },
-          { top: "70%", left: "2%", size: 28 },
-          { bottom: "12%", left: "5%", size: 48 },
-          { top: "10%", right: "4%", size: 32 },
-          { bottom: "8%", right: "5%", size: 36 },
+          { top: "8%", left: "3%", s: 40 },
+          { top: "70%", left: "2%", s: 28 },
+          { bottom: "12%", left: "5%", s: 48 },
+          { top: "10%", right: "4%", s: 32 },
+          { bottom: "8%", right: "5%", s: 36 },
         ].map((dot, i) => (
           <div
             key={i}
             className="absolute rounded-full bg-hitham-gold opacity-40"
             style={{
-              width: dot.size,
-              height: dot.size,
+              width: dot.s,
+              height: dot.s,
               top: (dot as { top?: string }).top,
               left: (dot as { left?: string }).left,
               right: (dot as { right?: string }).right,
@@ -98,18 +105,17 @@ export function IngredientsMatter() {
         ))}
       </div>
 
-      <div className="relative mx-auto px-4 lg:px-8" style={{ maxWidth: "100%" }}>
-        {/* Title */}
-        <h2 className="mb-8 text-center font-display text-3xl font-black text-veda-green lg:mb-12 lg:text-5xl">
+      <div className="relative mx-auto px-4 lg:px-8">
+        <h2 className="mb-10 text-center font-display text-3xl font-black text-veda-green lg:text-5xl">
           INGREDIENTS MATTER!
         </h2>
 
-        {/* Orbit container — centered, responsive size */}
+        {/* Orbit */}
         <div
           className="relative mx-auto"
           style={{ width: size, height: size }}
         >
-          {/* Rotating orbit ring */}
+          {/* Rotating ring */}
           <div
             ref={orbitRef}
             className="absolute inset-0 will-change-transform"
@@ -124,28 +130,33 @@ export function IngredientsMatter() {
               return (
                 <div
                   key={ingredient.name}
-                  className="absolute flex flex-col items-center"
+                  className="absolute"
                   style={{ left: x, top: y, width: circleSize }}
                 >
-                  {/* Counter-rotate so labels stay upright */}
+                  {/* Counter-rotated inner so image + label stay upright */}
                   <div
-                    style={{
-                      animation: `counter-spin ${360 / 0.25 / 60}s linear infinite`,
-                    }}
-                    className="flex flex-col items-center gap-0.5"
+                    className="ingredient-inner flex flex-col items-center gap-1"
+                    style={{ transformOrigin: "center center" }}
                   >
                     <div
-                      className="flex items-center justify-center overflow-hidden rounded-full border-2 border-white bg-parchment shadow-md"
-                      style={{
-                        width: circleSize,
-                        height: circleSize,
-                        fontSize: circleSize * 0.4,
-                      }}
+                      className="overflow-hidden rounded-full border-2 border-white bg-parchment shadow-lg"
+                      style={{ width: circleSize, height: circleSize }}
                     >
-                      {ingredient.emoji}
+                      <Image
+                        src={ingredient.image}
+                        alt={ingredient.name}
+                        width={circleSize}
+                        height={circleSize}
+                        className="h-full w-full object-cover"
+                        onError={(e) => {
+                          // Fallback to colored circle if image missing
+                          (e.target as HTMLImageElement).style.display = "none";
+                        }}
+                      />
                     </div>
                     <p
-                      className={`text-center font-semibold text-veda-green whitespace-nowrap ${fontSize}`}
+                      className={`text-center font-semibold text-veda-green whitespace-nowrap leading-tight ${fontSize}`}
+                      style={{ maxWidth: circleSize + 20 }}
                     >
                       {ingredient.name}
                     </p>
@@ -155,39 +166,32 @@ export function IngredientsMatter() {
             })}
           </div>
 
-          {/* Center product circle — fixed */}
+          {/* Center circle — fixed */}
           <div
-            className="absolute flex flex-col items-center justify-center overflow-hidden rounded-full border-4 border-hitham-gold bg-parchment shadow-xl"
+            className="absolute z-10 flex flex-col items-center justify-center overflow-hidden rounded-full border-4 border-hitham-gold bg-parchment shadow-2xl"
             style={{
-              width: centerCircle,
-              height: centerCircle,
+              width: centerSize,
+              height: centerSize,
               top: "50%",
               left: "50%",
               transform: "translate(-50%, -50%)",
-              zIndex: 10,
             }}
           >
-            <span className={centerEmoji}>🍪</span>
-            <p className={`font-bold text-veda-green ${fontSize}`}>
+            <span style={{ fontSize: centerSize * 0.3 }}>🍪</span>
+            <p
+              className="font-bold text-veda-green text-center leading-tight px-2"
+              style={{ fontSize: Math.max(10, centerSize * 0.09) }}
+            >
               Our Product
             </p>
           </div>
         </div>
 
-        {/* Bottom text */}
-        <p className="mx-auto mt-8 max-w-md text-center text-sm text-ink-soft px-4">
+        <p className="mx-auto mt-10 max-w-md text-center text-sm text-ink-soft px-4">
           Every ingredient is traceable, clean, and chosen with intention.
           No fillers. No preservatives. Just real food.
         </p>
       </div>
-
-      {/* CSS counter-rotation keyframes */}
-      <style>{`
-        @keyframes counter-spin {
-          from { transform: rotate(0deg); }
-          to { transform: rotate(-360deg); }
-        }
-      `}</style>
     </section>
   );
 }
