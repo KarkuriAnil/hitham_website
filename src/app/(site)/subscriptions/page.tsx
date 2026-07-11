@@ -93,9 +93,15 @@ export default function SubscriptionsPage() {
   useEffect(() => {
     let cancelled = false;
     getStorefrontPlans()
-      .then((data) => { if (!cancelled) setPlans(data as ExtendedPlan[]); })
-      .catch(() => { if (!cancelled) setPlans([]); });
-    return () => { cancelled = true; };
+      .then((data) => {
+        if (!cancelled) setPlans(data as ExtendedPlan[]);
+      })
+      .catch(() => {
+        if (!cancelled) setPlans([]);
+      });
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   const mainPlans = plans?.filter((p) => p.tier !== "Add-on") ?? [];
@@ -117,20 +123,26 @@ export default function SubscriptionsPage() {
           Vedahitham&apos;s 28-day programs are built around Ayurvedic principles —
           clean meals, no chemicals, no refined oils, no sugar.
         </p>
-        {/* Contact */}
+        {/* Contact in hero */}
         <div className="mt-6 flex flex-wrap items-center justify-center gap-4 text-sm text-parchment/80">
-          <a href="tel:9573404039" className="flex items-center gap-2 hover:text-hitham-gold transition-colors">
+          <Link
+            href="tel:9573404039"
+            className="flex items-center gap-2 hover:text-hitham-gold transition-colors"
+          >
             <Phone className="h-4 w-4 text-hitham-gold" />
             9573404039
-          </a>
-          <a href="mailto:Vedahitham@gmail.com" className="flex items-center gap-2 hover:text-hitham-gold transition-colors">
+          </Link>
+          <Link
+            href="mailto:Vedahitham@gmail.com"
+            className="flex items-center gap-2 hover:text-hitham-gold transition-colors"
+          >
             <Mail className="h-4 w-4 text-hitham-gold" />
             Vedahitham@gmail.com
-          </a>
+          </Link>
         </div>
       </section>
 
-      {/* Plans */}
+      {/* Plans grid */}
       <section className="mx-auto max-w-6xl px-4 py-12 lg:px-8">
         {plans === null ? (
           <p className="text-center text-sm text-ink-soft py-16">Loading plans…</p>
@@ -143,7 +155,8 @@ export default function SubscriptionsPage() {
             {mainPlans.map((plan) => {
               const tier = plan.tier || "Basic";
               const style = TIER_ACCENT[tier] || TIER_ACCENT["Basic"];
-              const hasMeals = plan.breakfastPrice || plan.lunchPrice || plan.dinnerPrice;
+              const hasMeals =
+                plan.breakfastPrice || plan.lunchPrice || plan.dinnerPrice;
 
               return (
                 <div
@@ -151,14 +164,18 @@ export default function SubscriptionsPage() {
                   className={`flex flex-col rounded-2xl border border-cream-border bg-white overflow-hidden shadow-sm ${style.border}`}
                 >
                   <div className="p-5 pb-3">
-                    <span className={`inline-flex items-center rounded-full border px-3 py-1 text-xs font-semibold ${style.badge}`}>
+                    <span
+                      className={`inline-flex items-center rounded-full border px-3 py-1 text-xs font-semibold ${style.badge}`}
+                    >
                       {tier}
                     </span>
                     <h3 className="mt-3 font-display text-xl font-bold text-veda-green">
                       {plan.title}
                     </h3>
                     {plan.description && (
-                      <p className="mt-1 text-xs text-ink-soft">{plan.description}</p>
+                      <p className="mt-1 text-xs text-ink-soft">
+                        {plan.description}
+                      </p>
                     )}
                   </div>
 
@@ -171,24 +188,34 @@ export default function SubscriptionsPage() {
                         {plan.breakfastPrice ? (
                           <div className="flex justify-between text-sm">
                             <span className="text-ink-soft">🌅 Breakfast</span>
-                            <span className="font-semibold text-veda-green">{fmt(plan.breakfastPrice)}</span>
+                            <span className="font-semibold text-veda-green">
+                              {fmt(plan.breakfastPrice)}
+                            </span>
                           </div>
                         ) : null}
                         {plan.lunchPrice ? (
                           <div className="flex justify-between text-sm">
                             <span className="text-ink-soft">☀️ Lunch</span>
-                            <span className="font-semibold text-veda-green">{fmt(plan.lunchPrice)}</span>
+                            <span className="font-semibold text-veda-green">
+                              {fmt(plan.lunchPrice)}
+                            </span>
                           </div>
                         ) : null}
                         {plan.dinnerPrice ? (
                           <div className="flex justify-between text-sm">
                             <span className="text-ink-soft">🌙 Dinner</span>
-                            <span className="font-semibold text-veda-green">{fmt(plan.dinnerPrice)}</span>
+                            <span className="font-semibold text-veda-green">
+                              {fmt(plan.dinnerPrice)}
+                            </span>
                           </div>
                         ) : null}
                         <div className="mt-1 flex justify-between border-t border-cream-border pt-1.5 text-sm">
-                          <span className="font-bold text-veda-green">Combo (28 days)</span>
-                          <span className="font-display text-lg font-bold text-veda-green">{fmt(plan.monthlyPrice)}</span>
+                          <span className="font-bold text-veda-green">
+                            Combo (28 days)
+                          </span>
+                          <span className="font-display text-lg font-bold text-veda-green">
+                            {fmt(plan.monthlyPrice)}
+                          </span>
                         </div>
                       </div>
                     </div>
@@ -196,16 +223,28 @@ export default function SubscriptionsPage() {
 
                   <div className="mx-4 mb-3 grid grid-cols-3 divide-x divide-cream-border rounded-xl border border-cream-border text-center">
                     <div className="py-2.5 px-1">
-                      <p className="text-[10px] uppercase tracking-wide text-ink-soft">Weekly</p>
-                      <p className="mt-0.5 font-display text-sm font-bold text-veda-green">{fmt(plan.weeklyPrice)}</p>
+                      <p className="text-[10px] uppercase tracking-wide text-ink-soft">
+                        Weekly
+                      </p>
+                      <p className="mt-0.5 font-display text-sm font-bold text-veda-green">
+                        {fmt(plan.weeklyPrice)}
+                      </p>
                     </div>
                     <div className="py-2.5 px-1">
-                      <p className="text-[10px] uppercase tracking-wide text-ink-soft">Monthly</p>
-                      <p className="mt-0.5 font-display text-sm font-bold text-veda-green">{fmt(plan.monthlyPrice)}</p>
+                      <p className="text-[10px] uppercase tracking-wide text-ink-soft">
+                        Monthly
+                      </p>
+                      <p className="mt-0.5 font-display text-sm font-bold text-veda-green">
+                        {fmt(plan.monthlyPrice)}
+                      </p>
                     </div>
                     <div className="py-2.5 px-1">
-                      <p className="text-[10px] uppercase tracking-wide text-ink-soft">Quarterly</p>
-                      <p className="mt-0.5 font-display text-sm font-bold text-veda-green">{fmt(plan.quarterlyPrice)}</p>
+                      <p className="text-[10px] uppercase tracking-wide text-ink-soft">
+                        Quarterly
+                      </p>
+                      <p className="mt-0.5 font-display text-sm font-bold text-veda-green">
+                        {fmt(plan.quarterlyPrice)}
+                      </p>
                     </div>
                   </div>
 
@@ -216,7 +255,10 @@ export default function SubscriptionsPage() {
                       </p>
                       <div className="flex flex-col gap-1">
                         {plan.benefits.map((b) => (
-                          <div key={b} className="flex items-start gap-2 text-xs text-ink-soft">
+                          <div
+                            key={b}
+                            className="flex items-start gap-2 text-xs text-ink-soft"
+                          >
                             <Check className="mt-0.5 h-3.5 w-3.5 shrink-0 text-veda-green" />
                             {b}
                           </div>
@@ -240,11 +282,13 @@ export default function SubscriptionsPage() {
         )}
       </section>
 
-      {/* Full Menu Section */}
+      {/* Full Menu */}
       <section className="bg-parchment-dim py-14">
         <div className="mx-auto max-w-6xl px-4 lg:px-8">
           <div className="mb-10 text-center">
-            <p className="text-xs uppercase tracking-wide text-hitham-gold">What we serve</p>
+            <p className="text-xs uppercase tracking-wide text-hitham-gold">
+              What we serve
+            </p>
             <h2 className="mt-1 font-display text-3xl font-bold text-veda-green lg:text-4xl">
               Our Full Menu
             </h2>
@@ -258,11 +302,16 @@ export default function SubscriptionsPage() {
             <div className="rounded-2xl border border-cream-border bg-white p-6">
               <div className="mb-4 flex items-center gap-2">
                 <span className="text-2xl">🌅</span>
-                <h3 className="font-display text-xl font-bold text-veda-green">Breakfast</h3>
+                <h3 className="font-display text-xl font-bold text-veda-green">
+                  Breakfast
+                </h3>
               </div>
               <div className="flex flex-col gap-2">
                 {MENU.breakfast.map((item) => (
-                  <div key={item} className="flex items-center gap-2 text-sm text-ink-soft">
+                  <div
+                    key={item}
+                    className="flex items-center gap-2 text-sm text-ink-soft"
+                  >
                     <div className="h-1.5 w-1.5 rounded-full bg-hitham-gold shrink-0" />
                     {item}
                   </div>
@@ -274,11 +323,16 @@ export default function SubscriptionsPage() {
             <div className="rounded-2xl border border-cream-border bg-white p-6">
               <div className="mb-4 flex items-center gap-2">
                 <span className="text-2xl">☀️</span>
-                <h3 className="font-display text-xl font-bold text-veda-green">Lunch</h3>
+                <h3 className="font-display text-xl font-bold text-veda-green">
+                  Lunch
+                </h3>
               </div>
               <div className="flex flex-col gap-2">
                 {MENU.lunch.map((item) => (
-                  <div key={item} className="flex items-center gap-2 text-sm text-ink-soft">
+                  <div
+                    key={item}
+                    className="flex items-center gap-2 text-sm text-ink-soft"
+                  >
                     <div className="h-1.5 w-1.5 rounded-full bg-hitham-gold shrink-0" />
                     {item}
                   </div>
@@ -290,11 +344,16 @@ export default function SubscriptionsPage() {
             <div className="rounded-2xl border border-cream-border bg-white p-6">
               <div className="mb-4 flex items-center gap-2">
                 <span className="text-2xl">🌙</span>
-                <h3 className="font-display text-xl font-bold text-veda-green">Dinner</h3>
+                <h3 className="font-display text-xl font-bold text-veda-green">
+                  Dinner
+                </h3>
               </div>
               <div className="flex flex-col gap-2">
                 {MENU.dinner.map((item) => (
-                  <div key={item} className="flex items-center gap-2 text-sm text-ink-soft">
+                  <div
+                    key={item}
+                    className="flex items-center gap-2 text-sm text-ink-soft"
+                  >
                     <div className="h-1.5 w-1.5 rounded-full bg-hitham-gold shrink-0" />
                     {item}
                   </div>
@@ -309,12 +368,21 @@ export default function SubscriptionsPage() {
       {addOns.length > 0 && (
         <section className="border-t border-cream-border bg-parchment py-12">
           <div className="mx-auto max-w-6xl px-4 lg:px-8">
-            <p className="text-xs uppercase tracking-wide text-hitham-gold">Enhance your plan</p>
-            <h2 className="mt-1 font-display text-2xl font-bold text-veda-green">Add-ons</h2>
+            <p className="text-xs uppercase tracking-wide text-hitham-gold">
+              Enhance your plan
+            </p>
+            <h2 className="mt-1 font-display text-2xl font-bold text-veda-green">
+              Add-ons
+            </h2>
             <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {addOns.map((plan) => (
-                <div key={plan.id} className="rounded-xl border border-cream-border bg-white p-5">
-                  <p className="font-display text-lg font-bold text-veda-green">{plan.title}</p>
+                <div
+                  key={plan.id}
+                  className="rounded-xl border border-cream-border bg-white p-5"
+                >
+                  <p className="font-display text-lg font-bold text-veda-green">
+                    {plan.title}
+                  </p>
                   <p className="mt-1 text-xs text-ink-soft">{plan.targetGoal}</p>
                   <p className="mt-3 font-display text-2xl font-bold text-hitham-gold">
                     {fmt(plan.monthlyPrice)}
@@ -338,30 +406,41 @@ export default function SubscriptionsPage() {
           Ashwini Reddy&apos;s Promise
         </p>
         <div className="mt-4 flex flex-wrap items-center justify-center gap-3">
-          {["No junk", "No chemicals", "No sugar", "No refined oils", "No compromises"].map((item) => (
-            <span key={item} className="rounded-full border border-hitham-gold/40 px-4 py-1.5 text-xs text-parchment/90">
+          {[
+            "No junk",
+            "No chemicals",
+            "No sugar",
+            "No refined oils",
+            "No compromises",
+          ].map((item) => (
+            <span
+              key={item}
+              className="rounded-full border border-hitham-gold/40 px-4 py-1.5 text-xs text-parchment/90"
+            >
               {item}
             </span>
           ))}
         </div>
-        <p className="mt-6 text-sm text-parchment/60">Just real food made with care and joy.</p>
+        <p className="mt-4 text-sm text-parchment/60">
+          Just real food made with care and joy.
+        </p>
 
         {/* Contact details */}
-        <div className="mt-8 flex flex-wrap items-center justify-center gap-6">
-          
+        <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
+          <Link
             href="tel:9573404039"
             className="flex items-center gap-2 rounded-full bg-hitham-gold px-5 py-2.5 text-sm font-bold text-veda-green hover:bg-hitham-gold-light transition-colors"
           >
             <Phone className="h-4 w-4" />
             Call: 9573404039
-          </a>
-          
+          </Link>
+          <Link
             href="mailto:Vedahitham@gmail.com"
             className="flex items-center gap-2 rounded-full border border-hitham-gold px-5 py-2.5 text-sm text-hitham-gold hover:bg-hitham-gold hover:text-veda-green transition-colors"
           >
             <Mail className="h-4 w-4" />
             Vedahitham@gmail.com
-          </a>
+          </Link>
           <Link
             href="https://www.instagram.com/hitham_kitchen?igsh=MTNvdWpxMmdsMnRmNw=="
             target="_blank"
@@ -375,7 +454,6 @@ export default function SubscriptionsPage() {
           </Link>
         </div>
 
-        {/* Timing */}
         <div className="mt-6 flex items-center justify-center gap-2 text-sm text-parchment/70">
           <Clock className="h-4 w-4 text-hitham-gold" />
           <span>Available Mon–Sat, 9 AM – 7 PM</span>
